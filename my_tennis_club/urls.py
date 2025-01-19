@@ -15,9 +15,29 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path,include
+from django.urls import path, include
+from django.shortcuts import render
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('members.urls')),
 ]
+
+
+def custom_page_not_found_view(request, exception):
+    return render(request, "404.html", {}, status=404)
+
+def custom_error_view(request):
+    return render(request, "500.html", {}, status=500)
+
+def custom_permission_denied_view(request, exception):
+    return render(request, "403.html", {}, status=403)
+
+def custom_bad_request_view(request, exception):
+    return render(request, "400.html", {}, status=400)
+
+# urls.py me handlers register karein
+handler404 = 'my_tennis_club.urls.custom_page_not_found_view'
+handler500 = 'my_tennis_club.urls.custom_error_view'
+handler403 = 'my_tennis_club.urls.custom_permission_denied_view'
+handler400 = 'my_tennis_club.urls.custom_bad_request_view'
