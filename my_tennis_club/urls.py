@@ -17,10 +17,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.shortcuts import render
+from .views import custom_login,home
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('members.urls')),
+    path('login/', custom_login, name='login'),
+    path('home/', home, name='home'),  # This should be your home path
+    path('', include('members.urls')),  # This should go below the homepage path
 ]
 
 
